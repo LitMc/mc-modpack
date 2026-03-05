@@ -22,6 +22,13 @@ CONFIG_PATH = REPO_ROOT / "mods-config.yaml"
 STABLE_VERSION_RE = re.compile(r"^\d+\.\d+(\.\d+)?$")
 
 
+def get_modrinth_supported_versions() -> set[str]:
+    """Get set of MC versions that Modrinth App officially supports."""
+    resp = requests.get(f"{MODRINTH_API}/tag/game_version", timeout=30)
+    resp.raise_for_status()
+    return {v["version"] for v in resp.json() if v.get("version_type") == "release"}
+
+
 def get_latest_stable_mc_version() -> str | None:
     """Get latest stable MC version from Paper API (must have default-channel build)."""
     resp = requests.get(PAPER_API, timeout=30)
@@ -110,12 +117,30 @@ def main() -> int:
     current_version = config["minecraft_version"]
     print(f"Current MC version: {current_version}")
 
-    latest = get_latest_stable_mc_version()
-    if not latest:
+    # latest_paper = MC version that Paper server supports (e.g. "1.21.11")
+    # latest_mrpack = MC version that Modrinth App recognizes (may lag behind)
+    latest_paper = get_latest_stable_mc_version()
+    if not latest_paper:
         print("Could not determine latest stable MC version.")
         return 1
 
-    print(f"Latest stable MC version: {latest}")
+    print(f"Latest Paper-compatible MC version: {latest_paper}")
+
+    # Check Modrinth App support separately — newly released MC versions may not
+    # be in Modrinth's game version manifest yet, causing wrong version resolution.
+    modrinth_versions = get_modrinth_supported_versions()
+    if latest_paper not in modrinth_versions:
+        # Paper supports it, but Modrinth App doesn't recognize it yet.
+        # Server can run it, but we cannot update the mrpack yet.
+        msg = (
+            f"MC {latest_paper} is available on Paper but not yet recognized by "
+            f"Modrinth App. mrpack update skipped until Modrinth adds support."
+        )
+        print(msg)
+        send_ntfy(msg)
+        return 0
+
+    latest = latest_paper
 
     if latest == current_version:
         print("No update available.")

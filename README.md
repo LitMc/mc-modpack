@@ -26,7 +26,7 @@ Modrinth App でインスタンスを削除するだけ。バニラの Minecraft
 
 ## 対応バージョン
 
-- Minecraft: 1.21.11
+- Minecraft: 1.21.1
 - MODローダー: Fabric 0.18.4
 
 ## Installation (English)
