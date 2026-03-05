@@ -200,6 +200,21 @@ if "%DL_ERROR%"=="1" (
 
 echo [3/3] 完了！
 echo.
+echo === インストール結果 ===
+if not "%DL_ERROR%"=="1" (
+    echo [完了] Inventory Profiles Next
+    echo [完了] Shoulder Surfing Reloaded
+    echo [完了] Fabric API
+    echo [完了] Fabric Language Kotlin
+    echo [完了] libIPN
+    echo [完了] Cloth Config
+) else (
+    echo 上記の [失敗] と表示されたMOD以外はインストール済みです。
+    echo.
+    echo [注意] 一部のMODのダウンロードに失敗しました。
+    echo 再度実行するか、手動でダウンロードしてください。
+)
+echo.
 echo ========================================
 echo   Minecraftランチャーを起動して
 echo   「fabric-loader-1.21.1」を選択して

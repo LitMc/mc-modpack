@@ -81,17 +81,53 @@ if not exist "%MODS_DIR%" (
 )
 
 echo 推奨MODを削除中...
+echo.
 
-del /q "%MODS_DIR%\InventoryProfilesNext-*.jar" 2>nul
-del /q "%MODS_DIR%\ShoulderSurfing-*.jar" 2>nul
-del /q "%MODS_DIR%\fabric-api-*.jar" 2>nul
-del /q "%MODS_DIR%\fabric-language-kotlin-*.jar" 2>nul
-del /q "%MODS_DIR%\libIPN-*.jar" 2>nul
-del /q "%MODS_DIR%\cloth-config-*-fabric.jar" 2>nul
+if exist "%MODS_DIR%\InventoryProfilesNext-*.jar" (
+    del /q "%MODS_DIR%\InventoryProfilesNext-*.jar" 2>nul
+    echo [削除] Inventory Profiles Next
+) else (
+    echo [なし] Inventory Profiles Next (導入されていませんでした)
+)
+
+if exist "%MODS_DIR%\ShoulderSurfing-*.jar" (
+    del /q "%MODS_DIR%\ShoulderSurfing-*.jar" 2>nul
+    echo [削除] Shoulder Surfing Reloaded
+) else (
+    echo [なし] Shoulder Surfing Reloaded (導入されていませんでした)
+)
+
+if exist "%MODS_DIR%\fabric-api-*.jar" (
+    del /q "%MODS_DIR%\fabric-api-*.jar" 2>nul
+    echo [削除] Fabric API
+) else (
+    echo [なし] Fabric API (導入されていませんでした)
+)
+
+if exist "%MODS_DIR%\fabric-language-kotlin-*.jar" (
+    del /q "%MODS_DIR%\fabric-language-kotlin-*.jar" 2>nul
+    echo [削除] Fabric Language Kotlin
+) else (
+    echo [なし] Fabric Language Kotlin (導入されていませんでした)
+)
+
+if exist "%MODS_DIR%\libIPN-*.jar" (
+    del /q "%MODS_DIR%\libIPN-*.jar" 2>nul
+    echo [削除] libIPN
+) else (
+    echo [なし] libIPN (導入されていませんでした)
+)
+
+if exist "%MODS_DIR%\cloth-config-*-fabric.jar" (
+    del /q "%MODS_DIR%\cloth-config-*-fabric.jar" 2>nul
+    echo [削除] Cloth Config
+) else (
+    echo [なし] Cloth Config (導入されていませんでした)
+)
 
 echo.
 echo ========================================
-echo   推奨MODを削除しました。
+echo   推奨MODの削除処理が完了しました。
 echo   通常のMinecraftで起動すると
 echo   バニラでプレイできます。
 echo ========================================
