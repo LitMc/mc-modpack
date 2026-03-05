@@ -6,6 +6,14 @@ echo   MOD アンインストーラー (Windows)
 echo ========================================
 echo.
 
+call :main
+pause
+exit /b 0
+
+rem ============================================================
+:main
+rem ============================================================
+
 rem === Minecraftフォルダの多段探索 ===
 set "MC_DIR="
 
@@ -38,11 +46,9 @@ set "MODRINTH_DIR=%APPDATA%\com.modrinth.theseus\profiles"
 if exist "%MODRINTH_DIR%" (
     echo [検出] Modrinth App プロファイルが見つかりました:
     echo.
-    for /d %%P in ("%MODRINTH_DIR%\*") do (
-        echo   - %%~nxP
-    )
+    for /d %%P in ("%MODRINTH_DIR%\*") do echo   - %%~nxP
     echo.
-    echo プロファイルフォルダのフルパスを次の入力欄に入力してください。
+    echo プロファイルフォルダのフルパスを入力してください。
     echo.
     goto :mc_ask_user
 )
@@ -51,87 +57,90 @@ if exist "%MODRINTH_DIR%" (
 echo [情報] Minecraftフォルダが自動検出できませんでした。
 echo.
 set "MC_RETRY=0"
+
 :mc_ask_loop
 if %MC_RETRY% GEQ 3 (
-    echo [エラー] 3回入力しましたが有効なパスが見つかりませんでした。
-    echo 原因: Minecraftがインストールされていないか、フォルダパスが正しくありません。
-    echo 対処: Minecraftのインストール先を確認してから再実行してください。
     echo.
-    echo Enterキーで終了します。
-    pause > nul
-    exit /b 1
+    echo [エラー] 3回入力しましたが有効なパスが見つかりませんでした。
+    goto :eof
 )
-set /p MC_DIR="Minecraftフォルダのパスを入力してください (例: C:\Users\<名前>\AppData\Roaming\.minecraft): "
-if exist "%MC_DIR%" (
-    echo [検出] 入力されたパス: %MC_DIR%
-    goto :mc_found
-)
+set /p MC_DIR="Minecraftフォルダのパスを入力してください: "
+if exist "%MC_DIR%" goto :mc_found
 echo [エラー] 指定されたパスが存在しません: %MC_DIR%
 set /a MC_RETRY+=1
 goto :mc_ask_loop
 
 :mc_found
-
 set "MODS_DIR=%MC_DIR%\mods"
 
 if not exist "%MODS_DIR%" (
+    echo.
     echo [情報] modsフォルダが見つかりません。MODは導入されていないようです。
-    pause
-    exit /b 0
+    goto :eof
 )
 
-echo 推奨MODを削除中...
+echo.
+echo --- 推奨MODを削除中 ---
 echo.
 
-if exist "%MODS_DIR%\InventoryProfilesNext-*.jar" (
-    del /q "%MODS_DIR%\InventoryProfilesNext-*.jar" 2>nul
-    echo [削除] Inventory Profiles Next
-) else (
-    echo [なし] Inventory Profiles Next (導入されていませんでした)
+set "DEL_IPN=NONE"
+set "DEL_SSR=NONE"
+set "DEL_FAPI=NONE"
+set "DEL_FLK=NONE"
+set "DEL_LIPN=NONE"
+set "DEL_CLOTH=NONE"
+
+rem IPN (複数バージョン対応)
+for %%f in ("%MODS_DIR%\InventoryProfilesNext-*.jar") do (
+    del /q "%%f" 2>nul
+    set "DEL_IPN=DELETED"
 )
 
-if exist "%MODS_DIR%\ShoulderSurfing-*.jar" (
-    del /q "%MODS_DIR%\ShoulderSurfing-*.jar" 2>nul
-    echo [削除] Shoulder Surfing Reloaded
-) else (
-    echo [なし] Shoulder Surfing Reloaded (導入されていませんでした)
+rem Shoulder Surfing Reloaded
+for %%f in ("%MODS_DIR%\ShoulderSurfing-*.jar") do (
+    del /q "%%f" 2>nul
+    set "DEL_SSR=DELETED"
 )
 
-if exist "%MODS_DIR%\fabric-api-*.jar" (
-    del /q "%MODS_DIR%\fabric-api-*.jar" 2>nul
-    echo [削除] Fabric API
-) else (
-    echo [なし] Fabric API (導入されていませんでした)
+rem Fabric API
+for %%f in ("%MODS_DIR%\fabric-api-*.jar") do (
+    del /q "%%f" 2>nul
+    set "DEL_FAPI=DELETED"
 )
 
-if exist "%MODS_DIR%\fabric-language-kotlin-*.jar" (
-    del /q "%MODS_DIR%\fabric-language-kotlin-*.jar" 2>nul
-    echo [削除] Fabric Language Kotlin
-) else (
-    echo [なし] Fabric Language Kotlin (導入されていませんでした)
+rem Fabric Language Kotlin
+for %%f in ("%MODS_DIR%\fabric-language-kotlin-*.jar") do (
+    del /q "%%f" 2>nul
+    set "DEL_FLK=DELETED"
 )
 
-if exist "%MODS_DIR%\libIPN-*.jar" (
-    del /q "%MODS_DIR%\libIPN-*.jar" 2>nul
-    echo [削除] libIPN
-) else (
-    echo [なし] libIPN (導入されていませんでした)
+rem libIPN
+for %%f in ("%MODS_DIR%\libIPN-*.jar") do (
+    del /q "%%f" 2>nul
+    set "DEL_LIPN=DELETED"
 )
 
-if exist "%MODS_DIR%\cloth-config-*-fabric.jar" (
-    del /q "%MODS_DIR%\cloth-config-*-fabric.jar" 2>nul
-    echo [削除] Cloth Config
-) else (
-    echo [なし] Cloth Config (導入されていませんでした)
+rem Cloth Config
+for %%f in ("%MODS_DIR%\cloth-config-*-fabric.jar") do (
+    del /q "%%f" 2>nul
+    set "DEL_CLOTH=DELETED"
 )
+
+echo --- アンインストール結果 ---
+echo.
+if "%DEL_IPN%"=="DELETED"    (echo [削除] Inventory Profiles Next)   else (echo [なし] Inventory Profiles Next)
+if "%DEL_SSR%"=="DELETED"    (echo [削除] Shoulder Surfing Reloaded) else (echo [なし] Shoulder Surfing Reloaded)
+if "%DEL_FAPI%"=="DELETED"   (echo [削除] Fabric API)                else (echo [なし] Fabric API)
+if "%DEL_FLK%"=="DELETED"    (echo [削除] Fabric Language Kotlin)    else (echo [なし] Fabric Language Kotlin)
+if "%DEL_LIPN%"=="DELETED"   (echo [削除] libIPN)                    else (echo [なし] libIPN)
+if "%DEL_CLOTH%"=="DELETED"  (echo [削除] Cloth Config)              else (echo [なし] Cloth Config)
 
 echo.
 echo ========================================
-echo   推奨MODの削除処理が完了しました。
+echo   推奨MODを削除しました。
 echo   通常のMinecraftで起動すると
 echo   バニラでプレイできます。
 echo ========================================
 echo.
 echo ※ 自分で追加したMODはそのまま残っています。
-echo.
-pause
+goto :eof
