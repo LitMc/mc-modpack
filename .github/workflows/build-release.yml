@@ -1,0 +1,52 @@
+name: Build and Release mrpack
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'mods-config.yaml'
+      - 'scripts/**'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: pip install pyyaml
+
+      - name: Build mrpack
+        run: bash scripts/build-mrpack.sh
+
+      - name: Delete existing 'latest' release
+        run: gh release delete latest --yes 2>/dev/null || true
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Delete existing 'latest' tag
+        run: git push origin :refs/tags/latest 2>/dev/null || true
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: latest
+          name: "JLN-HUT Modpack (Latest)"
+          body: |
+            Minecraft MODパック for jln-hut.page サーバー。
+
+            ## ダウンロード
+            - **mrpack**: `jln-hut-modpack.mrpack` をModrinth対応ランチャーにインポート
+            - **手動インストール**: `install-mods.bat` (Windows) / `install-mods.command` (macOS) を実行
+            - **アンインストール**: `uninstall-mods.bat` (Windows) / `uninstall-mods.command` (macOS) を実行
+          files: |
+            jln-hut-modpack.mrpack
+            scripts/install-mods.bat
+            scripts/install-mods.command
+            scripts/uninstall-mods.bat
+            scripts/uninstall-mods.command
+          make_latest: true

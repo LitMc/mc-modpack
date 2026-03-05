@@ -1,0 +1,41 @@
+minecraft_version: "1.21.1"
+fabric_loader_version: "0.16.9"
+pack_name: "JLN-HUT Modpack"
+pack_version: "1.0.0"
+mods:
+  - name: "Inventory Profiles Next"
+    modrinth_project_id: "O7RBXm3n"
+    modrinth_version_id: "A2gB9UGG"
+    file: "InventoryProfilesNext-fabric-1.21.1-2.2.3.jar"
+    url: "https://cdn.modrinth.com/data/O7RBXm3n/versions/A2gB9UGG/InventoryProfilesNext-fabric-1.21.1-2.2.3.jar"
+    env: {client: required, server: unsupported}
+  - name: "Shoulder Surfing Reloaded"
+    modrinth_project_id: "kepjj2sy"
+    modrinth_version_id: "XJw5tPaN"
+    file: "ShoulderSurfing-Fabric-1.21.1-4.22.0.jar"
+    url: "https://cdn.modrinth.com/data/kepjj2sy/versions/XJw5tPaN/ShoulderSurfing-Fabric-1.21.1-4.22.0.jar"
+    env: {client: required, server: unsupported}
+  - name: "Fabric API"
+    modrinth_project_id: "P7dR8mSH"
+    modrinth_version_id: "yGAe1owa"
+    file: "fabric-api-0.116.9+1.21.1.jar"
+    url: "https://cdn.modrinth.com/data/P7dR8mSH/versions/yGAe1owa/fabric-api-0.116.9%2B1.21.1.jar"
+    env: {client: required, server: required}
+  - name: "Fabric Language Kotlin"
+    modrinth_project_id: "Ha28R6CL"
+    modrinth_version_id: "ViT4gucI"
+    file: "fabric-language-kotlin-1.13.9+kotlin.2.3.10.jar"
+    url: "https://cdn.modrinth.com/data/Ha28R6CL/versions/ViT4gucI/fabric-language-kotlin-1.13.9%2Bkotlin.2.3.10.jar"
+    env: {client: required, server: required}
+  - name: "libIPN"
+    modrinth_project_id: "onSQdWhM"
+    modrinth_version_id: "3rPzmg5m"
+    file: "libIPN-fabric-1.21.1-6.6.2.jar"
+    url: "https://cdn.modrinth.com/data/onSQdWhM/versions/3rPzmg5m/libIPN-fabric-1.21.1-6.6.2.jar"
+    env: {client: required, server: required}
+  - name: "Cloth Config"
+    modrinth_project_id: "9s6osm5g"
+    modrinth_version_id: "HpMb5wGb"
+    file: "cloth-config-15.0.140-fabric.jar"
+    url: "https://cdn.modrinth.com/data/9s6osm5g/versions/HpMb5wGb/cloth-config-15.0.140-fabric.jar"
+    env: {client: required, server: required}
