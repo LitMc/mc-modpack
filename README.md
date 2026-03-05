@@ -23,6 +23,7 @@ Modrinth App でインスタンスを削除するだけ。バニラの Minecraft
 | Fabric Language Kotlin | Kotlin言語サポート |
 | libIPN | IPN依存ライブラリ |
 | Cloth Config | 設定画面ライブラリ |
+| Forge Config API Port | Shoulder Surfing Reloaded依存ライブラリ |
 
 ## 対応バージョン
 
