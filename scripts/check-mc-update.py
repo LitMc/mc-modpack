@@ -22,6 +22,13 @@ CONFIG_PATH = REPO_ROOT / "mods-config.yaml"
 STABLE_VERSION_RE = re.compile(r"^\d+\.\d+(\.\d+)?$")
 
 
+def get_mod_dependencies(version_id: str) -> list[dict]:
+    """Get dependencies for a specific mod version."""
+    resp = requests.get(f"{MODRINTH_API}/version/{version_id}", timeout=30)
+    resp.raise_for_status()
+    return resp.json().get("dependencies", [])
+
+
 def get_modrinth_supported_versions() -> set[str]:
     """Get set of MC versions that Modrinth App officially supports."""
     resp = requests.get(f"{MODRINTH_API}/tag/game_version", timeout=30)
@@ -179,6 +186,26 @@ def main() -> int:
     if incompatible:
         names = ", ".join(incompatible)
         msg = f"MC {latest} available but {names} not compatible yet."
+        print(msg)
+        send_ntfy(msg)
+        return 0
+
+    # Check that all required dependencies are present for new version
+    known_ids = {mod["modrinth_project_id"] for mod in config["mods"]}
+    missing_deps: list[str] = []
+    for i, mod in enumerate(config["mods"]):
+        new_version_id = mod_updates.get(i, {}).get("modrinth_version_id") or mod["modrinth_version_id"]
+        deps = get_mod_dependencies(new_version_id)
+        for dep in deps:
+            if dep.get("dependency_type") == "required":
+                dep_id = dep.get("project_id")
+                if dep_id and dep_id not in known_ids:
+                    missing_deps.append(f"{mod['name']} -> {dep_id}")
+    if missing_deps:
+        msg = (
+            f"MC {latest} update blocked: new required dependencies not in config: "
+            + ", ".join(missing_deps)
+        )
         print(msg)
         send_ntfy(msg)
         return 0
