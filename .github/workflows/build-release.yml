@@ -5,7 +5,7 @@ on:
     branches: [main]
     paths:
       - 'mods-config.yaml'
-      - 'scripts/**'
+      - 'scripts/build-mrpack.sh'
   workflow_dispatch:
 
 permissions:
@@ -39,14 +39,11 @@ jobs:
           body: |
             Minecraft MODパック for jln-hut.page サーバー。
 
-            ## ダウンロード
-            - **mrpack**: `jln-hut-modpack.mrpack` をModrinth対応ランチャーにインポート
-            - **手動インストール**: `install-mods.bat` (Windows) / `install-mods.command` (macOS) を実行
-            - **アンインストール**: `uninstall-mods.bat` (Windows) / `uninstall-mods.command` (macOS) を実行
+            ## インストール方法
+
+            1. `jln-hut-modpack.mrpack` をダウンロード
+            2. [Modrinth App](https://modrinth.com/app) を起動
+            3. 「+」→「From file」→ .mrpack を選択してインポート
           files: |
             jln-hut-modpack.mrpack
-            scripts/install-mods.bat
-            scripts/install-mods.command
-            scripts/uninstall-mods.bat
-            scripts/uninstall-mods.command
           make_latest: true
