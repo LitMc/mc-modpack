@@ -39,3 +39,9 @@ mods:
     file: "cloth-config-15.0.140-fabric.jar"
     url: "https://cdn.modrinth.com/data/9s6osm5g/versions/HpMb5wGb/cloth-config-15.0.140-fabric.jar"
     env: {client: required, server: required}
+  - name: "Forge Config API Port"
+    modrinth_project_id: "ohNO6lps"
+    modrinth_version_id: "N5qzq0XV"
+    file: "ForgeConfigAPIPort-v21.1.6-1.21.1-Fabric.jar"
+    url: "https://cdn.modrinth.com/data/ohNO6lps/versions/N5qzq0XV/ForgeConfigAPIPort-v21.1.6-1.21.1-Fabric.jar"
+    env: {client: required, server: required}
