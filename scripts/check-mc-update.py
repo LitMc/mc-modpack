@@ -18,7 +18,7 @@ MODRINTH_API = "https://api.modrinth.com/v2"
 FABRIC_META = "https://meta.fabricmc.net/v2/versions/loader"
 
 # Cross-repo update target
-OCI_REPO = "LitMc/minecraft-server-oci"
+OCI_REPO = "LitMc/mc-server"
 OCI_SETUP_SH = "scripts/setup.sh"
 # Matches: MINECRAFT_VERSION="${MINECRAFT_VERSION:-X.XX.X}"
 OCI_VERSION_RE = re.compile(
@@ -150,7 +150,7 @@ def delete_branch(branch: str, cwd: Path | None = None) -> None:
 
 def create_oci_pr(pat: str, new_version: str, current_version: str, branch: str) -> str:
     """
-    Clone minecraft-server-oci, update setup.sh, push branch, create PR.
+    Clone mc-server, update setup.sh, push branch, create PR.
     Returns the PR URL.
     """
     with tempfile.TemporaryDirectory() as tmpdir:
@@ -342,7 +342,7 @@ def main() -> int:
             config["mods"][i][key] = val
 
     if dry_run:
-        print("[dry-run] Would update mods-config.yaml and minecraft-server-oci (skipping).")
+        print("[dry-run] Would update mods-config.yaml and mc-server (skipping).")
         if not gh_pat:
             print("[dry-run] WARNING: GH_PAT is not set. Cross-repo update would be skipped.")
         return 0
@@ -359,14 +359,14 @@ def main() -> int:
     run_git("push", "-u", "origin", branch)
     print(f"mc-modpack: pushed branch {branch}")
 
-    # Step 2: Create minecraft-server-oci branch and commit (requires PAT)
+    # Step 2: Create mc-server branch and commit (requires PAT)
     oci_pr_url = ""
     if gh_pat:
         try:
             oci_pr_url = create_oci_pr(gh_pat, latest, current_version, branch)
-            print(f"minecraft-server-oci PR created: {oci_pr_url}")
+            print(f"mc-server PR created: {oci_pr_url}")
         except Exception as e:
-            print(f"ERROR: minecraft-server-oci update failed: {e}")
+            print(f"ERROR: mc-server update failed: {e}")
             print("Rolling back mc-modpack branch...")
             delete_branch(branch)
             send_ntfy(
@@ -374,7 +374,7 @@ def main() -> int:
             )
             return 1
     else:
-        print("WARNING: GH_PAT not set. minecraft-server-oci update skipped.")
+        print("WARNING: GH_PAT not set. mc-server update skipped.")
         print("Set GH_PAT secret to enable atomic cross-repo updates.")
 
     # Step 3: Create mc-modpack PR
