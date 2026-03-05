@@ -30,6 +30,6 @@ jobs:
           DRY_RUN: "0"
           NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          MC_SERVER_PAT: ${{ secrets.MC_SERVER_PAT }}
+          GH_PAT: ${{ secrets.GH_PAT }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: python scripts/check-mc-update.py
