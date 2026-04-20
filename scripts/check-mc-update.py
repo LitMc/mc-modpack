@@ -46,7 +46,7 @@ def get_modrinth_supported_versions() -> set[str]:
 
 
 def get_latest_stable_mc_version() -> str | None:
-    """Get latest stable MC version from Paper API (must have default-channel build)."""
+    """Get latest stable MC version from Paper API (must have a STABLE-channel build)."""
     resp = requests.get(PAPER_API, timeout=30)
     resp.raise_for_status()
     versions = resp.json()["versions"]
@@ -58,7 +58,9 @@ def get_latest_stable_mc_version() -> str | None:
         builds_resp = requests.get(builds_url, timeout=30)
         builds_resp.raise_for_status()
         builds = builds_resp.json().get("builds", [])
-        if any(b.get("channel") == "default" for b in builds):
+        # PaperMC v2 renamed channel values to uppercase (STABLE/BETA/ALPHA);
+        # "default" was the legacy value. Accept both for resilience.
+        if any((b.get("channel") or "").upper() == "STABLE" or b.get("channel") == "default" for b in builds):
             return version
     return None
 
