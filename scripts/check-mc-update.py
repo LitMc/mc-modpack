@@ -13,7 +13,10 @@ from pathlib import Path
 import requests
 from ruamel.yaml import YAML
 
-PAPER_API = "https://api.papermc.io/v2/projects/paper"
+PAPER_API = "https://fill.papermc.io/v3/projects/paper"
+PAPER_API_HEADERS = {
+    "User-Agent": "jln-hut-modpack/1.0 (https://github.com/LitMc/mc-modpack)",
+}
 MODRINTH_API = "https://api.modrinth.com/v2"
 FABRIC_META = "https://meta.fabricmc.net/v2/versions/loader"
 
@@ -46,21 +49,29 @@ def get_modrinth_supported_versions() -> set[str]:
 
 
 def get_latest_stable_mc_version() -> str | None:
-    """Get latest stable MC version from Paper API (must have a STABLE-channel build)."""
-    resp = requests.get(PAPER_API, timeout=30)
-    resp.raise_for_status()
-    versions = resp.json()["versions"]
+    """Get latest stable MC version from Paper Fill (v3) API.
 
-    # Filter to stable version strings, check from newest to oldest
-    stable = [v for v in versions if STABLE_VERSION_RE.match(v)]
-    for version in reversed(stable):
+    v3 returns versions as a map of major-version groups; within each group
+    versions are ordered newest → oldest. We flatten groups preserving order,
+    filter to release-format strings, then probe builds until we find one
+    with a STABLE channel build.
+    """
+    resp = requests.get(PAPER_API, headers=PAPER_API_HEADERS, timeout=30)
+    resp.raise_for_status()
+    groups = resp.json()["versions"]
+
+    candidates: list[str] = []
+    for group_versions in groups.values():
+        candidates.extend(group_versions)
+
+    for version in candidates:
+        if not STABLE_VERSION_RE.match(version):
+            continue
         builds_url = f"{PAPER_API}/versions/{version}/builds"
-        builds_resp = requests.get(builds_url, timeout=30)
+        builds_resp = requests.get(builds_url, headers=PAPER_API_HEADERS, timeout=30)
         builds_resp.raise_for_status()
-        builds = builds_resp.json().get("builds", [])
-        # PaperMC v2 renamed channel values to uppercase (STABLE/BETA/ALPHA);
-        # "default" was the legacy value. Accept both for resilience.
-        if any((b.get("channel") or "").upper() == "STABLE" or b.get("channel") == "default" for b in builds):
+        builds = builds_resp.json()
+        if any(b.get("channel") == "STABLE" for b in builds):
             return version
     return None
 
