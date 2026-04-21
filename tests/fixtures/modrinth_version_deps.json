@@ -1,0 +1,41 @@
+{
+  "id": "abcDEF12",
+  "project_id": "P1AbCd2E",
+  "name": "Sample Mod 1.2.3",
+  "version_number": "1.2.3",
+  "version_type": "release",
+  "loaders": ["fabric"],
+  "game_versions": ["1.21.11"],
+  "date_published": "2026-03-16T00:00:00Z",
+  "files": [
+    {
+      "filename": "sample-1.2.3.jar",
+      "url": "https://cdn.modrinth.com/data/P1AbCd2E/versions/abcDEF12/sample-1.2.3.jar",
+      "hashes": {
+        "sha1": "cccccccccccccccccccccccccccccccccccccccc"
+      },
+      "primary": true,
+      "size": 1024000
+    }
+  ],
+  "dependencies": [
+    {
+      "version_id": null,
+      "project_id": "KNOWN123",
+      "file_name": null,
+      "dependency_type": "required"
+    },
+    {
+      "version_id": null,
+      "project_id": "UNKNOWN9",
+      "file_name": null,
+      "dependency_type": "required"
+    },
+    {
+      "version_id": null,
+      "project_id": "OPTDEP01",
+      "file_name": null,
+      "dependency_type": "optional"
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+[
+  {
+    "id": "abcDEF12",
+    "project_id": "P1AbCd2E",
+    "name": "Fabric API 0.123.0+1.21.11",
+    "version_number": "0.123.0+1.21.11",
+    "version_type": "release",
+    "loaders": ["fabric"],
+    "game_versions": ["1.21.11"],
+    "date_published": "2026-03-16T00:00:00Z",
+    "files": [
+      {
+        "filename": "fabric-api-0.123.0+1.21.11.jar",
+        "url": "https://cdn.modrinth.com/data/P1AbCd2E/versions/abcDEF12/fabric-api-0.123.0+1.21.11.jar",
+        "hashes": {
+          "sha1": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "primary": true,
+        "size": 2048000
+      }
+    ],
+    "dependencies": []
+  },
+  {
+    "id": "oldVER99",
+    "project_id": "P1AbCd2E",
+    "name": "Fabric API 0.122.0+1.21.11",
+    "version_number": "0.122.0+1.21.11",
+    "version_type": "release",
+    "loaders": ["fabric"],
+    "game_versions": ["1.21.11"],
+    "date_published": "2026-03-01T00:00:00Z",
+    "files": [
+      {
+        "filename": "fabric-api-0.122.0+1.21.11.jar",
+        "url": "https://cdn.modrinth.com/data/P1AbCd2E/versions/oldVER99/fabric-api-0.122.0+1.21.11.jar",
+        "hashes": {
+          "sha1": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        },
+        "primary": true,
+        "size": 2047000
+      }
+    ],
+    "dependencies": []
+  }
+]

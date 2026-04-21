@@ -1,0 +1,6 @@
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "--strict-markers"
+markers = [
+    "contract: contract tests against real external APIs (daily cron, opt-in via -m contract)",
+]

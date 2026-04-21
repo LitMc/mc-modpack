@@ -1,0 +1,42 @@
+[
+  {
+    "loader": {
+      "separator": ".",
+      "build": 16,
+      "maven": "net.fabricmc:fabric-loader:0.17.0-beta.2",
+      "version": "0.17.0-beta.2",
+      "stable": false
+    },
+    "intermediary": {
+      "maven": "net.fabricmc:intermediary:1.21.11",
+      "version": "1.21.11",
+      "stable": true
+    },
+    "launcherMeta": {
+      "version": 2,
+      "min_java_version": 17,
+      "libraries": {},
+      "mainClass": {}
+    }
+  },
+  {
+    "loader": {
+      "separator": ".",
+      "build": 15,
+      "maven": "net.fabricmc:fabric-loader:0.17.0-beta.1",
+      "version": "0.17.0-beta.1",
+      "stable": false
+    },
+    "intermediary": {
+      "maven": "net.fabricmc:intermediary:1.21.11",
+      "version": "1.21.11",
+      "stable": true
+    },
+    "launcherMeta": {
+      "version": 2,
+      "min_java_version": 17,
+      "libraries": {},
+      "mainClass": {}
+    }
+  }
+]
