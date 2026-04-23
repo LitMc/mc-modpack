@@ -1,0 +1,46 @@
+[
+  {
+    "channel": "ALPHA",
+    "id": 2003,
+    "time": "2026-04-15T10:00:00Z",
+    "downloads": {
+      "server:default": {
+        "name": "paper-26.1.2-2003.jar",
+        "checksums": {
+          "sha256": "1111111111111111111111111111111111111111111111111111111111111001"
+        },
+        "size": 62914560,
+        "url": "https://fill-data.papermc.io/v1/objects/1000/paper-26.1.2-2003.jar"
+      }
+    },
+    "commits": [
+      {
+        "sha": "1111111111111111111111111111111111111111",
+        "message": "26.1.2 early build",
+        "time": "2026-04-15T09:30:00Z"
+      }
+    ]
+  },
+  {
+    "channel": "ALPHA",
+    "id": 2002,
+    "time": "2026-04-14T10:00:00Z",
+    "downloads": {
+      "server:default": {
+        "name": "paper-26.1.2-2002.jar",
+        "checksums": {
+          "sha256": "1111111111111111111111111111111111111111111111111111111111111002"
+        },
+        "size": 62914561,
+        "url": "https://fill-data.papermc.io/v1/objects/1001/paper-26.1.2-2002.jar"
+      }
+    },
+    "commits": [
+      {
+        "sha": "2222222222222222222222222222222222222222",
+        "message": "26.1.2 build 2",
+        "time": "2026-04-14T09:30:00Z"
+      }
+    ]
+  }
+]

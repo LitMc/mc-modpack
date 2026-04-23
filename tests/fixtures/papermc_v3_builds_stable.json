@@ -1,0 +1,68 @@
+[
+  {
+    "channel": "STABLE",
+    "id": 1104,
+    "time": "2026-03-15T10:00:00Z",
+    "downloads": {
+      "server:default": {
+        "name": "paper-1.21.11-1104.jar",
+        "checksums": {
+          "sha256": "0000000000000000000000000000000000000000000000000000000000000001"
+        },
+        "size": 52428800,
+        "url": "https://fill-data.papermc.io/v1/objects/0000/paper-1.21.11-1104.jar"
+      }
+    },
+    "commits": [
+      {
+        "sha": "abc1234567890abc1234567890abc1234567890a",
+        "message": "Update to 1.21.11",
+        "time": "2026-03-15T09:30:00Z"
+      }
+    ]
+  },
+  {
+    "channel": "BETA",
+    "id": 1103,
+    "time": "2026-03-14T08:00:00Z",
+    "downloads": {
+      "server:default": {
+        "name": "paper-1.21.11-1103.jar",
+        "checksums": {
+          "sha256": "0000000000000000000000000000000000000000000000000000000000000002"
+        },
+        "size": 52428801,
+        "url": "https://fill-data.papermc.io/v1/objects/0001/paper-1.21.11-1103.jar"
+      }
+    },
+    "commits": [
+      {
+        "sha": "def4567890abc1234567890abc1234567890abcd",
+        "message": "Pre-release build",
+        "time": "2026-03-14T07:30:00Z"
+      }
+    ]
+  },
+  {
+    "channel": "ALPHA",
+    "id": 1102,
+    "time": "2026-03-13T12:00:00Z",
+    "downloads": {
+      "server:default": {
+        "name": "paper-1.21.11-1102.jar",
+        "checksums": {
+          "sha256": "0000000000000000000000000000000000000000000000000000000000000003"
+        },
+        "size": 52428802,
+        "url": "https://fill-data.papermc.io/v1/objects/0002/paper-1.21.11-1102.jar"
+      }
+    },
+    "commits": [
+      {
+        "sha": "ef567890abc1234567890abc1234567890abcdef",
+        "message": "Early testing build",
+        "time": "2026-03-13T11:30:00Z"
+      }
+    ]
+  }
+]
