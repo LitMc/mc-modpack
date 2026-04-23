@@ -1,0 +1,38 @@
+name: API Contract Tests
+
+# Daily probe of PaperMC / Modrinth / Fabric Meta API shapes.
+# Surfaces upstream contract drift the day it happens, so the
+# production auto-update.yml (UTC 09:00) does not silently fail the way
+# cmd_327 did (14 days of undetected API v2 → v3 breakage).
+#
+# Cron chosen as UTC 00:30 — 8.5 h before auto-update.yml's 09:00 UTC run,
+# giving a full overnight window to notice breakage before the next live run.
+#
+# No ntfy: GitHub Actions' default "failed job" email notification is
+# sufficient (Shogun directive 2026-04-21).
+
+on:
+  schedule:
+    - cron: "30 0 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  contract-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install test dependencies
+        run: pip install -r requirements-test.txt
+
+      - name: Run contract tests
+        run: pytest -m contract tests/test_api_contract.py -v --tb=short
